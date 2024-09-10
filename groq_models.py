@@ -4,14 +4,16 @@ from groq import Groq
 import typing_extensions as typing
 import logging
 import json
+import streamlit as st
 from typing import List, Optional
 
 from pydantic import BaseModel
 from tenacity import retry, stop_after_attempt, wait_exponential
 
 
-load_dotenv()
-GROQ_API_KEY = os.getenv('groq_api')
+#load_dotenv()
+#GROQ_API_KEY = os.getenv('groq_api')
+GROQ_API_KEY = st.secrets["GROQ_API_KEY"]
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)

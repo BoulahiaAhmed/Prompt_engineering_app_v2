@@ -1,0 +1,7 @@
+google-generativeai
+typing-extensions
+python-dotenv
+streamlit
+tenacity
+pydantic
+groq

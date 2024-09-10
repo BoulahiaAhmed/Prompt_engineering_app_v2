@@ -44,7 +44,7 @@ def main():
     # Set the title of the app
     st.title('Poc: Prompt Testing & Enhancement')
     st.divider()
-    st.subheader("Video Upload, Audio Extraction, and Transcription")
+    st.subheader("🎬 Video Upload, Audio Extraction, and Transcription")
 
     # File uploader for video files
     video_file = st.file_uploader("Upload a Video", type=["mp4", "mov", "avi", "mkv"])
@@ -77,7 +77,7 @@ def main():
         sales_deck = transcribe_audio_with_whisper(audio_path)
         st.text_area("Video Transcript:", sales_deck, height=250)
     st.divider()
-    st.subheader('Model Selection')
+    st.subheader('✨ AI Model Selection')
     # Dropdown to select the model
     #model_name = st.selectbox("Select Model", ['gemini-1.5-flash', 'gemini-1.5-pro-latest'])
     appearing_model_name = st.radio("Select Model", ['gemini-1.5-flash', 'gemini-1.5-pro-latest', 'llama-3.1-70b', 'llama-3.1-8b', 'mixtral-8x7b', 'gemma2-9b'], horizontal=True)
@@ -106,18 +106,18 @@ def main():
         st.info("Rate limit: 30 Request Per Minute")
 
     # st.divider()
-    # st.subheader('Enter Sles Deck to evaluate here: ')
+    # st.subheader('Enter Sales Deck to evaluate here: ')
     # sales_deck = st.text_area("Sales Deck:", value=default_sales_deck, height=250)
 
     # Input for rules
     st.divider()
-    st.subheader('Enter rules here')
+    st.subheader('👮 Enter rules here')
     st.write("\nIf you want to enter more than 1 rule use ## as a separator, \nexample:\n\n Fair, Clear, and Not Misleading ## Inclusion of Risk Warnings ")
     rules_string = st.text_area("Rules:", value=default_rules, height=200)
     rules_list = create_rules_list(rules_string)
 
     st.divider()
-    st.subheader('Prompt Engineering')
+    st.subheader('🧩 Prompt Engineering')
     st.write("Modify this prompt to evaluate the model output")
     # Input for prompt
     system_message = st.text_area("Prompt:", value=default_system_message, height=500)

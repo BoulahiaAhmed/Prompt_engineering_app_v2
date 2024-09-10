@@ -1,7 +1,7 @@
 google-generativeai
 typing-extensions
 python-dotenv
-moviepy.editor
+moviepy
 streamlit
 tenacity
 pydantic

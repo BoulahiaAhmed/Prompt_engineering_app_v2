@@ -2,6 +2,7 @@ import google.generativeai as genai
 from google.generativeai.types import HarmCategory, HarmBlockThreshold, GenerationConfig
 import typing_extensions as typing
 import logging
+import streamlit as st
 import json
 import os
 from dotenv import load_dotenv
@@ -18,8 +19,9 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Load environment variables from a .env file
-load_dotenv()
-GOOGLE_API_KEY = os.getenv('API_KEY')
+#load_dotenv()
+#GOOGLE_API_KEY = os.getenv('API_KEY')
+GOOGLE_API_KEY = st.secrets["GOOGLE_API_KEY"]
 
 # Configure Google Generative AI with API Key
 genai.configure(api_key=GOOGLE_API_KEY)

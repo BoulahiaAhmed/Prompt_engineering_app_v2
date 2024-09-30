@@ -80,7 +80,7 @@ def main():
     st.subheader('✨ AI Model Selection')
     # Dropdown to select the model
     #model_name = st.selectbox("Select Model", ['gemini-1.5-flash', 'gemini-1.5-pro-latest'])
-    appearing_model_name = st.radio("Select Model", ['gemini-1.5-flash', 'gemini-1.5-pro-latest', 'llama-3.1-70b', 'llama-3.1-8b', 'mixtral-8x7b', 'gemma2-9b'], horizontal=True)
+    appearing_model_name = st.radio("Select Model", ['gemini-1.5-flash', 'gemini-1.5-pro-latest', 'llama-3.1-70b', 'llama-3.2-90b', 'mixtral-8x7b', 'gemma2-9b'], horizontal=True)
     if appearing_model_name == 'gemini-1.5-flash':
         model_name = 'gemini-1.5-flash'
         st.info("Rate limit: 15 Request Per Minute")
@@ -93,8 +93,8 @@ def main():
         model_name = 'llama-3.1-70b-versatile'
         st.info("Rate limit: 30 Request Per Minute")
 
-    if appearing_model_name == 'llama-3.1-8b':
-        model_name = 'llama-3.1-8b-instant	'
+    if appearing_model_name == 'llama-3.2-90b':
+        model_name = 'llama-3.2-90b-text-preview'
         st.info("Rate limit: 30 Request Per Minute")
 
     if appearing_model_name == 'mixtral-8x7b':

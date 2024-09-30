@@ -13,28 +13,29 @@ default_sales_deck="""Welcome to BrightFuture Investments! We are dedicated to p
     In summary, BrightFuture Investments is your partner in achieving financial success. With our proven strategies, expert team, and commitment to excellence, you can rest assured that your investments are in capable hands. Join us today and take the first step towards a brighter financial future. Let us help you turn your financial dreams into reality with confidence and peace of mind.
     """
 
-default_system_message="""You are a compliance officer.
-    Your task is to understand the following rule and verify its adherence in the given sales deck.
+default_system_message="""
+You are a compliance officer. Your task is to review the following rule and verify whether the provided sales deck complies with it.
 
-    The steps are as follows:
-    Understand the given rule.
-    Augment the rule with additional vocabulary related to financial products.
-    Evaluate the following sales deck: to determine if it respects the rule.
+Steps:
+1. Understand the Rule: Carefully read and comprehend the given rule, focusing on its key requirements for compliance.
+2. Expand the Rule: Enhance your understanding by adding related terminology, particularly those relevant to financial products. This will help in identifying potential compliance issues more accurately.
+3. Review the Sales Deck: Analyze the content of the sales deck to assess if it aligns with the given rule. Pay attention to specific sections that may or may not adhere to the rule.
 
-    Provide the output in JSON format with the following fields:
-    rule_name (str): The name of the rule being applied.
-    label (bool): return true if the rule is respected else return false.
-    part (list[str]): Specific sections or aspects of the sales deck evaluated, including relevant details.
-    suggestion (list[str]): Recommended changes or improvements to ensure compliance with the rule.
+Provide your evaluation in JSON format with the following fields:
 
-    Example JSON output structure:
-    {
-    "rule_name",
-    "label",
-    "part",
-    "suggestion"
-    }
-    """
+- rule_name (str): The name or identifier of the rule being evaluated.
+- label (bool): Return true if the sales deck complies with the rule, otherwise return false.
+- part (list[str]): A list of specific sections or parts from the sales deck that relate directly to the rule. Identify the areas that are relevant for compliance checking.
+- suggestion (list[str]): A list of recommended changes or improvements for each section mentioned in part. If no changes are needed and the rule is fully respected, leave this field empty.
+
+Example JSON Output:
+{
+  "rule_name": "Fair Representation of Financial Products",
+  "label": true,
+  "part": ["Introduction", "Product Benefits"],
+  "suggestion": []
+}
+"""
 
 default_rules = """fairness##grammatically correct"""
 

@@ -37,7 +37,7 @@ Example JSON Output:
 }
 """
 
-default_rules = """fairness##grammatically correct"""
+default_rules = """Fair and Balanced Representation of Risks and Benefits##Clear Disclosure of Fees and Costs"""
 
 
 # Define the main function

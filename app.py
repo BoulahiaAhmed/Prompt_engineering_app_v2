@@ -25,14 +25,14 @@ Provide your evaluation in JSON format with the following fields:
 
 - rule_name (str): The name or identifier of the rule being evaluated.
 - label (bool): Return true if the sales deck complies with the rule, otherwise return false.
-- part (list[str]): A list of specific sections or parts from the sales deck that relate directly to the rule. Identify the areas that are relevant for compliance checking.
-- suggestion (list[str]): A list of recommended changes or improvements for each section mentioned in part. If no changes are needed and the rule is fully respected, leave this field empty.
+- part (list[str]): List of specific text parts from the sales deck that relate directly to the rule.
+- suggestion (list[str]): A list of recommended changes or improvements for each text mentioned in part. If no changes are needed and the rule is fully respected, leave this field empty.
 
-Example JSON Output:
+Ensure the output is following this JSON schema:
 {
-  "rule_name": "Fair Representation of Financial Products",
-  "label": true,
-  "part": ["Introduction", "Product Benefits"],
+  "rule_name": "",
+  "label": true OR false,
+  "part": [],
   "suggestion": []
 }
 """

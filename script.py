@@ -7,6 +7,7 @@ import json
 import os
 from dotenv import load_dotenv
 
+
 # Define TypedDict for Gemini response
 class GeminiResponse(typing.TypedDict):
     rule_name: str
@@ -19,8 +20,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Load environment variables from a .env file
-#load_dotenv()
-#GOOGLE_API_KEY = os.getenv('API_KEY')
+
 GOOGLE_API_KEY = st.secrets["GOOGLE_API_KEY"]
 
 # Configure Google Generative AI with API Key
@@ -64,7 +64,7 @@ def create_rules_list(input_string: str):
 
 def inference(system_message: str, model_name: str, rules_list: list[str], sales_deck: str) -> typing.Optional[str]:
     """Perform inference using the Gemini model and return the generated response."""
-    output_list=[]
+    output_list = []
 
     for rule in rules_list:
         input_text = f"""

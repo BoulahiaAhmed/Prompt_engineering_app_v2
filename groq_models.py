@@ -11,8 +11,6 @@ from pydantic import BaseModel
 from tenacity import retry, stop_after_attempt, wait_exponential
 
 
-#load_dotenv()
-#GROQ_API_KEY = os.getenv('groq_api')
 GROQ_API_KEY = st.secrets["GROQ_API_KEY"]
 
 # Set up logging
@@ -170,7 +168,7 @@ default_system_message="""You are a compliance officer.
     }
     """
 
-rules_list=["fairness","grammatically correct"]
+rules_list=["fairness", "grammatically correct"]
 
 res = groq_inference(default_system_message, llama3_1, rules_list, default_sales_deck)
 print(res)

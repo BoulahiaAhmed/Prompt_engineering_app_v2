@@ -12,9 +12,6 @@ from tenacity import retry, stop_after_attempt, wait_exponential
 
 
 GROQ_API_KEY = st.secrets["GROQ_API_KEY"]
-#load_dotenv()
-#GROQ_API_KEY = os.getenv('groq_api')
-#GROQ_API_KEY="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"
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)

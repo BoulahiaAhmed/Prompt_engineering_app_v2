@@ -11,9 +11,6 @@ from dotenv import load_dotenv
 
 
 # Load environment variables from a .env file
-# load_dotenv()
-# GROQ_API_KEY = os.getenv('groq_api')
-# GROQ_API_KEY="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"
 
 GROQ_API_KEY = st.secrets["GROQ_API_KEY"]
 

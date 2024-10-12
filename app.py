@@ -1,9 +1,11 @@
 import streamlit as st
 from script import gemini_answer, create_rules_list, inference
 from groq_models import groq_inference, video_card_generation
-from video_processing import transcribe_audio_with_whisper, extract_audio_from_video
+from video_processing import transcribe_audio_with_whisper, extract_audio_from_video, video_media_processing
 import time
 import os
+from concurrent.futures import ThreadPoolExecutor
+
 
 default_sales_deck="""Welcome to BrightFuture Investments! We are dedicated to providing top-notch investment opportunities tailored to your financial goals. With our expert team and innovative strategies, your financial future is in safe hands. At BrightFuture Investments, we understand the complexities of the financial market and strive to simplify the investment process for you. Our mission is to help you achieve your financial aspirations with confidence and ease.
     BrightFuture Investments leverages cutting-edge algorithms and market insights to maximize your returns. Our team of experts has developed a sophisticated investment strategy that has historically delivered exceptional results. Many of our clients have seen their investments grow significantly, often doubling within a short period. While we always emphasize that past performance does not guarantee future results, our track record speaks volumes about our capability and dedication. Our focus on minimizing risk while maximizing returns sets us apart in the industry. Our platform consistently outperforms the competition, making it the preferred choice for savvy investors. We pride ourselves on our ability to deliver superior returns and unparalleled service. Many of our clients achieve their financial independence much faster than they anticipated, thanks to our innovative approach. By choosing BrightFuture Investments, you are aligning yourself with a team that prioritizes your financial success and is committed to helping you reach your goals.
@@ -129,15 +131,66 @@ def main():
     generate_output = st.button('Generate output')
     if generate_output:
         start = time.time()
-        with st.spinner(text="Generation In progress..."):
+        with st.spinner(text="Reviewing In progress..."):
             if 'gemini' in model_name:
-                output = inference(system_message, model_name, rules_list, sales_deck)
+                with ThreadPoolExecutor() as executor:
+                    # Submit both tasks to run in parallel
+                    future_transcript = executor.submit(inference, system_message, model_name, rules_list, sales_deck)
+                    future_video = executor.submit(video_media_processing, temp_video_path)
+                    
+                    # Get results
+                    transcript_review_output = future_transcript.result()
+                    video_review_output = future_video.result()
+                    output = {'transcript_review_output': transcript_review_output, 'video_review_output': video_review_output}
             else:
-                output = groq_inference(system_message, model_name, rules_list, sales_deck)
+                with ThreadPoolExecutor() as executor:
+                    # Submit both tasks to run in parallel
+                    future_transcript = executor.submit(groq_inference, system_message, model_name, rules_list, sales_deck)
+                    future_video = executor.submit(video_media_processing, temp_video_path)
+                    
+                    # Get results
+                    transcript_review_output = future_transcript.result()
+                    video_review_output = future_video.result()
+                    output = {'transcript_review_output': transcript_review_output, 'video_review_output': video_review_output}
+
         end = time.time()
-        st.write(f"Generation Duration: {end-start:.2f} seconds")
-        for elm in output:
-            st.json(elm)
+
+        st.write(f"Reviewing Duration: {end-start:.2f} seconds")
+
+        st.subheader("Audio Media reviewing results")
+        for elm in output['transcript_review_output']:
+            rule = elm['rule_name']
+            label = elm['label']
+            parts_list = elm['part']
+            suggestion_list = elm['suggestion']
+            st.write(f"Rule name {rule}")
+            if label:
+                st.write("Respected: ✔️")
+            else:
+                st.write("Not Respected: ❌")
+                for i in range(len(parts_list)):
+                    part = parts_list[i]
+                    with st.expander(f"Part {i+1}: {part}"):
+                        suggestion = suggestion_list[i]
+                        st.write(f"Responsible text part: {part}")
+                        st.write(f"Suggestion: {suggestion}")
+                    
+        st.subheader("Video Media reviewing results")
+        disclaimer_status = output['video_review_output']["disclaimer_is_exist"]
+        disclaimer_text = output['video_review_output']["disclaimer_text"]
+        if disclaimer_status:
+            st.write("Disclaimer Exist ✔️")
+            st.write("Disclaimer: ", disclaimer_text)
+        else:
+            st.write("No disclaimer found! Please add one ⚠️")
+
+        # st.divider()
+        # st.subheader("Raw results")
+        # st.write("Audio Media reviewing results")
+        # for elm in output['transcript_review_output']:
+        #     st.json(elm)
+        # st.write("Video Media reviewing results")
+        # st.json(output['video_review_output'])
 
     st.divider()
     st.subheader('Product card')
@@ -148,7 +201,7 @@ def main():
         st.markdown(video_card)
 
 
-
 # Run the app
+
 if __name__ == "__main__":
     main()
